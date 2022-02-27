@@ -1,9 +1,6 @@
 <template>
     <div id="app">
-        <section class="main-section">
-            <h1>Hello World!</h1>
-            <PixelCanvas />
-        </section>
+        <PixelCanvas />
     </div>
 </template>
 
