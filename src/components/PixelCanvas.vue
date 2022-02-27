@@ -1,6 +1,6 @@
 <template>
     <canvas ref="pixelCanvas" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
-            @mousemove="handleMouseMove"></canvas>
+            @mousemove="handleMouseMove" @mouseleave="handleMouseUp"></canvas>
 </template>
 
 <script>
