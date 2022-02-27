@@ -3,13 +3,12 @@
         <PaletteEditor :palette="palette" :selected-color-index="selectedColorIndex"
                        @select-color-index="selectColorIndex" />
         <PixelCanvas cell-size="50" num-cells="8" :palette="palette" :selected-color-index="selectedColorIndex" />
-        {{selectedColorIndex}}
     </div>
 </template>
 
 <script>
 import PixelCanvas from '@/components/PixelCanvas.vue'
-import PaletteEditor from '@/components/PaletteEditor';
+import PaletteEditor from '@/components/PaletteEditor'
 
 export default {
     name: 'App',
