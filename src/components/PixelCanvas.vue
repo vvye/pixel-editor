@@ -1,5 +1,7 @@
 <template>
-    <canvas ref="pixelCanvas" width="400" height="400"></canvas>
+    <canvas ref="pixelCanvas" width="400" height="400"
+            @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mousemove="handleMouseMove"
+    ></canvas>
 </template>
 
 <script>
@@ -8,12 +10,13 @@ export default {
     props: {
         cellSize: Number,
         numCells: Number,
-        selectedColor: Number
+        selectedColor: Number,
     },
     data: function () {
         return {
             ctx: null,
-            grid: []
+            grid: [],
+            penDown: false,
         }
     },
     mounted: function () {
@@ -30,10 +33,28 @@ export default {
                 }
             }
         },
+        draw: function(x, y) {
+            let row = Math.floor(y / this.cellSize);
+            let col = Math.floor(x / this.cellSize);
+            this.drawRowCol(row, col);
+        },
+        drawRowCol: function(row, col) {
+            this.grid[row][col] = this.selectedColor;
+            this.render();
+        },
+        handleMouseDown: function(e) {
+            this.penDown = true;
+            this.draw(e.offsetX, e.offsetY);
+        },
+        handleMouseUp: function() {
+            this.penDown = false;
+        },
+        handleMouseMove: function(e) {
+            if (this.penDown) {
+                this.draw(e.offsetX, e.offsetY);
+            }
+        },
         render: function() {
-
-            this.grid[4][3] = this.selectedColor;
-
             for (let row = 0; row < this.numCells; row++) {
                 for (let col = 0; col < this.numCells; col++) {
                     let value = this.grid[row][col];
