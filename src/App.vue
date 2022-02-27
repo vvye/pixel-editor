@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <PaletteEditor />
+        <PaletteEditor :palette="palette"/>
         <PixelCanvas cell-size="50" num-cells="8" :palette="palette" :selected-color-index="2" />
     </div>
 </template>
