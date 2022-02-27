@@ -1,7 +1,9 @@
 <template>
     <div id="app">
-        <PaletteEditor :palette="palette"/>
-        <PixelCanvas cell-size="50" num-cells="8" :palette="palette" :selected-color-index="2" />
+        <PaletteEditor :palette="palette" :selected-color-index="selectedColorIndex"
+                       @select-color-index="selectColorIndex" />
+        <PixelCanvas cell-size="50" num-cells="8" :palette="palette" :selected-color-index="selectedColorIndex" />
+        {{selectedColorIndex}}
     </div>
 </template>
 
@@ -18,12 +20,18 @@ export default {
                 [255, 0, 0], [0, 255, 0], [0, 0, 255],
                 [255, 255, 0], [0, 255, 255], [255, 0, 255],
                 [255, 255, 255]
-            ]
+            ],
+            selectedColorIndex: 0
         }
     },
     components: {
         PixelCanvas,
         PaletteEditor
+    },
+    methods: {
+        selectColorIndex: function (index) {
+            this.selectedColorIndex = index;
+        }
     }
 }
 </script>

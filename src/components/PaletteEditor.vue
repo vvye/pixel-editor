@@ -1,7 +1,7 @@
 <template>
     <div>
         <span v-for="(color, index) in this.palette" :key="index"
-              class="color" :class="index === this.selectedColor ? 'selected' : ''"
+              class="color" :class="index === this.selectedColorIndex ? 'selected' : ''"
               :style="{
                   'background-color': `rgb(${color[0]}, ${color[1]}, ${color[2]})`,
                   'color': `rgb(${color[0]}, ${color[1]}, ${color[2]})`
@@ -16,7 +16,7 @@ export default {
     name: 'PaletteEditor',
     data: function () {
         return {
-            selectedColor: 0
+            selectedColorIndex: 0
         }
     },
     props: {
@@ -24,7 +24,8 @@ export default {
     },
     methods: {
         selectColor: function (index) {
-            this.selectedColor = index;
+            this.selectedColorIndex = index;
+            this.$emit('selectColorIndex', index);
         }
     }
 }
