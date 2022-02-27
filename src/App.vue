@@ -1,8 +1,9 @@
 <template>
     <div id="app">
-        <PaletteEditor :palette="palette" :selected-color-index="selectedColorIndex"
-                       @select-color-index="selectColorIndex" @color-changed="changeColor" />
-        <PixelCanvas ref="pixelCanvas" cell-size="50" num-cells="8" :palette="palette" :selected-color-index="selectedColorIndex" />
+        <PaletteEditor :palette="palette" :current-color-index="currentColorIndex"
+                       @current-color-index-changed="changeCurrentColorIndex" @color-changed="changeColor" />
+        <PixelCanvas ref="pixelCanvas" cell-size="50" num-cells="8" :palette="palette"
+                     :current-color-index="currentColorIndex" />
     </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
                 [255, 255, 0], [0, 255, 255], [255, 0, 255],
                 [255, 255, 255]
             ],
-            selectedColorIndex: 0
+            currentColorIndex: 0
         }
     },
     components: {
@@ -28,12 +29,12 @@ export default {
         PaletteEditor
     },
     methods: {
-        selectColorIndex: function (index) {
-            this.selectedColorIndex = index;
+        changeCurrentColorIndex: function (index) {
+            this.currentColorIndex = index;
         },
         changeColor: function (index, color) {
             this.palette[index] = color;
-            this.$refs.pixelCanvas.render();  // update colors
+            this.$refs.pixelCanvas.redraw();  // update colors
         }
     }
 }

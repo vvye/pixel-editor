@@ -9,7 +9,7 @@ export default {
     props: {
         cellSize: Number,
         numCells: Number,
-        selectedColorIndex: Number,
+        currentColorIndex: Number,
         palette: Array,
     },
     data: function () {
@@ -24,7 +24,7 @@ export default {
         canvas.width = canvas.height = this.cellSize * this.numCells;
         this.ctx = canvas.getContext('2d');
         this.resetGrid();
-        this.render();
+        this.redraw();
     },
     methods: {
         resetGrid: function () {
@@ -41,8 +41,8 @@ export default {
             this.drawRowCol(row, col);
         },
         drawRowCol: function (row, col) {
-            this.grid[row][col] = this.selectedColorIndex;
-            this.render();
+            this.grid[row][col] = this.currentColorIndex;
+            this.redraw();
         },
         handleMouseDown: function (e) {
             this.penDown = true;
@@ -56,7 +56,7 @@ export default {
                 this.draw(e.offsetX, e.offsetY);
             }
         },
-        render: function () {
+        redraw: function () {
             for (let row = 0; row < this.numCells; row++) {
                 for (let col = 0; col < this.numCells; col++) {
                     let index = this.grid[row][col];
