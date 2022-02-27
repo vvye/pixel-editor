@@ -9,7 +9,8 @@ export default {
     props: {
         cellSize: Number,
         numCells: Number,
-        selectedColor: Number,
+        selectedColorIndex: Number,
+        palette: Array,
     },
     data: function () {
         return {
@@ -40,7 +41,7 @@ export default {
             this.drawRowCol(row, col);
         },
         drawRowCol: function (row, col) {
-            this.grid[row][col] = this.selectedColor;
+            this.grid[row][col] = this.selectedColorIndex;
             this.render();
         },
         handleMouseDown: function (e) {
@@ -58,8 +59,10 @@ export default {
         render: function () {
             for (let row = 0; row < this.numCells; row++) {
                 for (let col = 0; col < this.numCells; col++) {
-                    let value = this.grid[row][col];
-                    this.ctx.fillStyle = `rgb(${value}, ${value}, ${value})`;
+                    let index = this.grid[row][col];
+                    let color = this.palette[index];
+                    let [r, g, b] = color;
+                    this.ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
                     this.ctx.fillRect(col * this.cellSize, row * this.cellSize, this.cellSize, this.cellSize);
                 }
             }
