@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <PixelCanvas cell-size="50" num-cells="8" />
+        <PixelCanvas cell-size="50" num-cells="8" :selected-color="192"/>
     </div>
 </template>
 

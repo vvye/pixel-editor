@@ -7,7 +7,8 @@ export default {
     name: 'PixelCanvas',
     props: {
         cellSize: Number,
-        numCells: Number
+        numCells: Number,
+        selectedColor: Number
     },
     data: function () {
         return {
@@ -31,7 +32,7 @@ export default {
         },
         render: function() {
 
-            this.grid[4][3] = 128;
+            this.grid[4][3] = this.selectedColor;
 
             for (let row = 0; row < this.numCells; row++) {
                 for (let col = 0; col < this.numCells; col++) {
