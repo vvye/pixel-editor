@@ -1,7 +1,6 @@
 <template>
-    <canvas ref="pixelCanvas" width="400" height="400"
-            @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mousemove="handleMouseMove"
-    ></canvas>
+    <canvas ref="pixelCanvas" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
+            @mousemove="handleMouseMove"></canvas>
 </template>
 
 <script>
@@ -20,12 +19,14 @@ export default {
         }
     },
     mounted: function () {
-        this.ctx = this.$refs.pixelCanvas.getContext('2d');
+        let canvas = this.$refs.pixelCanvas;
+        canvas.width = canvas.height = this.cellSize * this.numCells;
+        this.ctx = canvas.getContext('2d');
         this.resetGrid();
         this.render();
     },
     methods: {
-        resetGrid: function() {
+        resetGrid: function () {
             for (let row = 0; row < this.numCells; row++) {
                 this.grid[row] = [];
                 for (let col = 0; col < this.numCells; col++) {
@@ -33,28 +34,28 @@ export default {
                 }
             }
         },
-        draw: function(x, y) {
+        draw: function (x, y) {
             let row = Math.floor(y / this.cellSize);
             let col = Math.floor(x / this.cellSize);
             this.drawRowCol(row, col);
         },
-        drawRowCol: function(row, col) {
+        drawRowCol: function (row, col) {
             this.grid[row][col] = this.selectedColor;
             this.render();
         },
-        handleMouseDown: function(e) {
+        handleMouseDown: function (e) {
             this.penDown = true;
             this.draw(e.offsetX, e.offsetY);
         },
-        handleMouseUp: function() {
+        handleMouseUp: function () {
             this.penDown = false;
         },
-        handleMouseMove: function(e) {
+        handleMouseMove: function (e) {
             if (this.penDown) {
                 this.draw(e.offsetX, e.offsetY);
             }
         },
-        render: function() {
+        render: function () {
             for (let row = 0; row < this.numCells; row++) {
                 for (let col = 0; col < this.numCells; col++) {
                     let value = this.grid[row][col];
@@ -68,7 +69,4 @@ export default {
 </script>
 
 <style scoped>
-canvas {
-    border: 1px solid;
-}
 </style>
