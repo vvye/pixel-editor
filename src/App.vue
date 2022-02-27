@@ -2,8 +2,16 @@
     <div id="app">
         <PaletteEditor :palette="palette" :current-color-index="currentColorIndex"
                        @current-color-index-changed="changeCurrentColorIndex" @color-changed="changeColor" />
-        <PixelCanvas ref="pixelCanvas" cell-size="50" num-cells="8" :palette="palette"
+        <PixelCanvas ref="pixelCanvas" :cell-size="cellSize" :num-cells="numCells" :palette="palette"
                      :current-color-index="currentColorIndex" />
+        <br />
+        zoom: <input type="number" v-model="cellSize">
+        dimensions: <select v-model="numCells">
+        <option value="8">8x8</option>
+        <option value="12">12x12</option>
+        <option value="16">16x16</option>
+        <option value="32">32x32</option>
+    </select>
     </div>
 </template>
 
@@ -15,6 +23,8 @@ export default {
     name: 'App',
     data: function () {
         return {
+            cellSize: 32,
+            numCells: 8,
             palette: [
                 [0, 0, 0],
                 [255, 0, 0], [0, 255, 0], [0, 0, 255],
@@ -34,7 +44,11 @@ export default {
         },
         changeColor: function (index, color) {
             this.palette[index] = color;
-            this.$refs.pixelCanvas.redraw();  // update colors
+            this.refreshCanvas();
+        },
+        refreshCanvas: function() {
+            let canvas = this.$refs.pixelCanvas;
+            canvas.redraw();
         }
     }
 }

@@ -19,10 +19,25 @@ export default {
             penDown: false,
         }
     },
+    watch: {
+        cellSize: {
+            handler: function () {
+                this.updateCanvasSize();
+                this.redraw();
+            }
+        },
+        numCells: {
+            handler: function() {
+                this.updateCanvasSize();
+                this.resetGrid();
+                this.redraw();
+            }
+        }
+    },
     mounted: function () {
         let canvas = this.$refs.pixelCanvas;
-        canvas.width = canvas.height = this.cellSize * this.numCells;
         this.ctx = canvas.getContext('2d');
+        this.updateCanvasSize();
         this.resetGrid();
         this.redraw();
     },
@@ -34,6 +49,10 @@ export default {
                     this.grid[row][col] = 0;
                 }
             }
+        },
+        updateCanvasSize: function () {
+            let canvas = this.$refs.pixelCanvas;
+            canvas.width = canvas.height = this.cellSize * this.numCells;
         },
         draw: function (x, y) {
             let row = Math.floor(y / this.cellSize);
