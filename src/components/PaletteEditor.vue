@@ -1,9 +1,13 @@
 <template>
-    <div>
+    <div class="palette-container">
         <PaletteEntry v-for="(color, id) in this.palette" :key="id"
                       :color="color" :selected="this.currentColorId === id"
                       @click="selectColor(id)" />
-        <input type="color" :value="this.selectedColorAsHex" @change="changeSelectedColor" />
+    </div>
+    <div class="palette-container">
+        <label>
+            <input type="color" :value="this.selectedColorAsHex" @input="changeSelectedColor" /> Edit selected color
+        </label>
     </div>
 </template>
 
@@ -47,9 +51,12 @@ export default {
 </script>
 
 <style scoped>
-div {
+.palette-container {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
+    background-color: #151d23;
+    border-radius: 0.25rem;
+    box-shadow: inset 0 0.25rem 0 #0e151a;
 }
 </style>

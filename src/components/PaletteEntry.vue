@@ -10,7 +10,7 @@ export default {
         selected: Boolean
     },
     computed: {
-        cssProps: function () {
+        cssProps() {
             return {
                 '--bg-color': `rgb(${this.color.join(',')})`
             }
@@ -22,14 +22,11 @@ export default {
 <style scoped>
 div {
     background-color: var(--bg-color);
-    width: 2rem;
-    height: 2rem;
-    margin-right: 0.25rem;
-    border: 1px solid black;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 div.selected {
-    width: 2.25rem;
-    height: 2.25rem;
+    transform: scale(1.1);
 }
 </style>

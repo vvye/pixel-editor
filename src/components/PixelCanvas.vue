@@ -183,4 +183,9 @@ export default {
 </script>
 
 <style scoped>
+canvas {
+    border: 1rem solid #2b3a44;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.25rem 0 #0e151a;
+}
 </style>
