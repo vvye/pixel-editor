@@ -119,7 +119,7 @@ html, body {
 }
 
 body {
-    background-color: #151d23;
+    background: url('assets/img/background.png') bottom #151d23;
     color: #c9ccce;
     padding: 2rem;
     text-shadow: 0 0.125rem 0 #0e151a;
