@@ -1,5 +1,5 @@
 <template>
-    <canvas ref="canvas" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
+    <canvas class="transparent" ref="canvas" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
             @mousemove="handleMouseMove" @mouseleave="handleMouseUp"></canvas>
 </template>
 
@@ -19,7 +19,7 @@ export default {
             ctx: null,
             grid: [],
             penDown: false,
-            defaultColorId: 0
+            defaultColorId: 30
         }
     },
     watch: {
@@ -153,12 +153,12 @@ export default {
             this.render();
         },
         render() {
+            this.ctx.clearRect(0, 0, this.numCells * this.cellSize, this.numCells * this.cellSize);
             for (let row = 0; row < this.numCells; row++) {
                 for (let col = 0; col < this.numCells; col++) {
                     let index = this.grid[row][col];
                     let color = this.palette[index];
-                    let [r, g, b] = color;
-                    this.ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+                    this.ctx.fillStyle = `rgb(${color.join(',')}`;
                     this.ctx.fillRect(col * this.cellSize, row * this.cellSize, this.cellSize, this.cellSize);
                 }
             }

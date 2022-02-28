@@ -19,7 +19,7 @@ export default {
     },
     data() {
         return {
-            currentColorId: 0
+            currentColorId: 30
         }
     },
     props: {
@@ -27,7 +27,7 @@ export default {
     },
     computed: {
         selectedColorAsHex() {
-            let color = this.palette[this.currentColorId];
+            let color = this.palette[this.currentColorId].slice(0, 3);
             return '#' + color.map(n => n.toString(16).padStart(2, '0')).join('');
         }
     },
@@ -41,7 +41,7 @@ export default {
             let r = parseInt(newColorHex.substring(1, 3), 16);
             let g = parseInt(newColorHex.substring(3, 5), 16);
             let b = parseInt(newColorHex.substring(5, 7), 16);
-            let newColor = [r, g, b];
+            let newColor = [r, g, b, 255];
             this.$emit('colorChanged', this.currentColorId, newColor);
         }
     }

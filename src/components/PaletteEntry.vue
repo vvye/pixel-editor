@@ -1,5 +1,5 @@
 <template>
-    <div :style="cssProps" :class="{'selected': selected}"></div>
+    <div :style="cssProps" :class="{'selected': selected, 'transparent': this.color[3] === 0}"></div>
 </template>
 
 <script>
