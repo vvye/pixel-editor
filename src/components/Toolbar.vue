@@ -3,7 +3,7 @@
         <input type="checkbox" v-model="paintBucketMode" /> Paint Bucket
         <button @click="clearCanvasButtonPressed">Clear</button>
         <button ref="downloadButton" @click="downloadButtonPressed">Download</button>
-        zoom: <input type="number" min="1" max="100" step="1" v-model="cellSize">
+        zoom: <input type="range" min="1" max="100" step="1" v-model="cellSize">
         dimensions:
         <select v-model="numCells">
             <option value="8">8x8</option>
