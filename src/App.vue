@@ -1,13 +1,19 @@
 <template>
-    <div id="app">
-        <Toolbar @paint-bucket-mode-changed="setPaintBucketMode" @clear-canvas-button-pressed="resetCanvas"
-                 @cell-size-changed="setCellSize" @num-cells-changed="setNumCells"
-                 @show-grid-lines-changed="setShowGridLines" @download-button-pressed="downloadCanvasImage"></Toolbar>
-        <PaletteEditor ref="paletteEditor" :palette="palette" :current-color-id="currentColorId"
-                       @current-color-id-changed="setCurrentColorId" @color-changed="setColor" />
-        <PixelCanvas ref="pixelCanvas" :cell-size="cellSize" :num-cells="numCells" :palette="palette"
-                     :current-color-id="currentColorId" :paint-bucket-mode="paintBucketMode"
-                     :show-grid-lines="showGridLines" />
+    <div class="container">
+        <div class="sidebar">
+            <h1>pixel editor</h1>
+            <Toolbar @paint-bucket-mode-changed="setPaintBucketMode" @clear-canvas-button-pressed="resetCanvas"
+                     @cell-size-changed="setCellSize" @num-cells-changed="setNumCells"
+                     @show-grid-lines-changed="setShowGridLines"
+                     @download-button-pressed="downloadCanvasImage"></Toolbar>
+            <PaletteEditor ref="paletteEditor" :palette="palette" :current-color-id="currentColorId"
+                           @current-color-id-changed="setCurrentColorId" @color-changed="setColor" />
+        </div>
+        <div class="canvas-container">
+            <PixelCanvas ref="pixelCanvas" :cell-size="cellSize" :num-cells="numCells" :palette="palette"
+                         :current-color-id="currentColorId" :paint-bucket-mode="paintBucketMode"
+                         :show-grid-lines="showGridLines" />
+        </div>
     </div>
 </template>
 
@@ -71,3 +77,20 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+.container {
+    display: grid;
+    grid-template-columns: 30rem auto;
+}
+
+.sidebar {
+    grid-column: 1/2;
+}
+
+.canvas-container {
+    grid-column: 2/3;
+}
+
+</style>
