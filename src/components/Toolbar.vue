@@ -4,7 +4,8 @@
             <button @click="clearCanvasButtonPressed">Clear</button>
             <button ref="downloadButton" @click="downloadButtonPressed">Download</button>
         </div>
-        <input type="checkbox" v-model="paintBucketMode" /> Paint Bucket
+        <input type="radio" v-model="paintBucketMode" value="false" /> Pen
+        <input type="radio" v-model="paintBucketMode" value="true" /> Paint Bucket
         <div>
             zoom: <input type="range" min="1" max="100" step="1" v-model="cellSize">
             dimensions:
