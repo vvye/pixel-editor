@@ -18,7 +18,7 @@ export default {
         return {
             ctx: null,
             grid: [],
-            mousePressed: false,
+            penDown: false,
             dataURI: ''
         }
     },
@@ -107,14 +107,16 @@ export default {
             return neighbors;
         },
         handleMouseDown: function (e) {
-            this.mousePressed = true;
+            if (!this.paintBucketMode) {
+                this.penDown = true;
+            }
             this.mouseDown(e.offsetX, e.offsetY);
         },
         handleMouseUp: function () {
-            this.mousePressed = false;
+            this.penDown = false;
         },
         handleMouseMove: function (e) {
-            if (this.mousePressed) {
+            if (this.penDown) {
                 this.mouseDown(e.offsetX, e.offsetY);
             }
         },
@@ -140,7 +142,7 @@ export default {
             }
         },
         downloadImage: function () {
-            let dataURL =  this.$refs.canvas.toDataURL('image/png');
+            let dataURL = this.$refs.canvas.toDataURL('image/png');
             window.open(dataURL);
         }
     }
