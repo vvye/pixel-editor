@@ -2,6 +2,7 @@
     <div class="container">
         <div class="sidebar">
             <h1>pixel editor</h1>
+            <p>an application</p>
             <Toolbar @paint-bucket-mode-changed="setPaintBucketMode" @clear-canvas-button-pressed="resetCanvas"
                      @cell-size-changed="setCellSize" @num-cells-changed="setNumCells"
                      @show-grid-lines-changed="setShowGridLines"
@@ -78,19 +79,62 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    min-height: 100vh;
+}
+
+body {
+    background-color: #151d23;
+    color: #c9ccce;
+    padding: 2rem;
+}
+
+body, button {
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 1.2rem;
+}
+
+</style>
+
+<style scoped>
 .container {
     display: grid;
-    grid-template-columns: 30rem auto;
+    grid-template-columns: 32rem auto;
+    gap: 2rem;
 }
 
 .sidebar {
     grid-column: 1/2;
+    background-color: #2b3a44;
+    padding: 1rem 1.5rem 2rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.25rem 0 #0e151a;
 }
 
 .canvas-container {
     grid-column: 2/3;
+}
+
+h1 {
+    font-family: 'Bungee', sans-serif;
+    font-size: 3.5rem;
+    line-height: 3.5rem;
+    margin-top: -2rem;
+    margin-left: -0.2rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0.25rem 0 #0e151a;
+}
+
+h1 + p {
+    margin-bottom: 2rem;
 }
 
 </style>
