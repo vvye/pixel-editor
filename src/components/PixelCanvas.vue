@@ -44,11 +44,8 @@ export default {
     },
     methods: {
         resetGrid: function () {
-            for (let row = 0; row < this.numCells; row++) {
-                this.grid[row] = [];
-                for (let col = 0; col < this.numCells; col++) {
-                    this.grid[row][col] = 0;
-                }
+            for (let i = 0; i < this.numCells * this.numCells; i++) {
+                this.grid[i] = 0;
             }
         },
         updateCanvasSize: function () {
@@ -65,7 +62,7 @@ export default {
             }
         },
         drawRowCol: function (row, col) {
-            this.grid[row][col] = this.currentColorIndex;
+            this.grid[row * this.numCells + col] = this.currentColorIndex;
             this.redraw();
         },
         floodFill: function (row, col) {
@@ -94,13 +91,17 @@ export default {
         redraw: function () {
             for (let row = 0; row < this.numCells; row++) {
                 for (let col = 0; col < this.numCells; col++) {
-                    let index = this.grid[row][col];
+                    let index = this.gridAt(row, col);
                     let color = this.palette[index];
                     let [r, g, b] = color;
                     this.ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
                     this.ctx.fillRect(col * this.cellSize, row * this.cellSize, this.cellSize, this.cellSize);
                 }
             }
+        },
+        gridAt: function(row, col) {
+            let gridIndex = row * this.numCells + col;
+            return this.grid[gridIndex]
         }
     }
 }
