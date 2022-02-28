@@ -1,18 +1,11 @@
 <template>
     <div id="app">
-        <Toolbar @paint-bucket-mode-changed="changePaintBucketMode" @clear-canvas-button-pressed="resetCanvas"></Toolbar>
+        <Toolbar @paint-bucket-mode-changed="setPaintBucketMode" @clear-canvas-button-pressed="resetCanvas"
+        @cell-size-changed="setCellSize" @num-cells-changed="setNumCells"></Toolbar>
         <PaletteEditor ref="paletteEditor" :palette="palette" :current-color-id="currentColorId"
-                       @current-color-id-changed="changeCurrentColorId" @color-changed="changeColor" />
+                       @current-color-id-changed="setCurrentColorId" @color-changed="setColor" />
         <PixelCanvas ref="pixelCanvas" :cell-size="cellSize" :num-cells="numCells" :palette="palette"
                      :current-color-id="currentColorId" :paint-bucket-mode="paintBucketMode" />
-        <br />
-        zoom: <input type="number" v-model="cellSize">
-        dimensions: <select v-model="numCells">
-        <option value="8">8x8</option>
-        <option value="12">12x12</option>
-        <option value="16">16x16</option>
-        <option value="32">32x32</option>
-    </select>
     </div>
 </template>
 
@@ -43,15 +36,21 @@ export default {
         Toolbar
     },
     methods: {
-        changeCurrentColorId: function (id) {
+        setCurrentColorId: function (id) {
             this.currentColorId = id;
         },
-        changeColor: function (id, color) {
+        setColor: function (id, color) {
             this.palette[id] = color;
             this.refreshCanvas();
         },
-        changePaintBucketMode: function (value) {
-            this.paintBucketMode = value;
+        setPaintBucketMode: function (paintBucketMode) {
+            this.paintBucketMode = paintBucketMode;
+        },
+        setCellSize: function(cellSize) {
+            this.cellSize = cellSize;
+        },
+        setNumCells: function(numCells) {
+            this.numCells = numCells;
         },
         refreshCanvas: function () {
             this.$refs.pixelCanvas.render();

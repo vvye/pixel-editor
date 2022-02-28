@@ -1,7 +1,14 @@
 <template>
     <div>
-        <input type="checkbox" v-model="paintBucketMode" @change="changePaintBucketMode" /> Paint Bucket
+        <input type="checkbox" v-model="paintBucketMode" /> Paint Bucket
         <button @click="clearCanvas">Clear</button>
+        zoom: <input type="number" v-model="cellSize">
+        dimensions: <select v-model="numCells">
+        <option value="8">8x8</option>
+        <option value="12">12x12</option>
+        <option value="16">16x16</option>
+        <option value="32">32x32</option>
+    </select>
     </div>
 </template>
 
@@ -11,15 +18,31 @@ export default {
     name: 'Toolbar',
     data: function () {
         return {
-            paintBucketMode: false
+            paintBucketMode: false,
+            cellSize: 32,
+            numCells: 8,
         }
     },
     methods: {
-        changePaintBucketMode: function () {
-            this.$emit('paintBucketModeChanged', this.paintBucketMode);
-        },
         clearCanvas: function() {
             this.$emit('clearCanvasButtonPressed');
+        }
+    },
+    watch: {
+        paintBucketMode: {
+            handler: function() {
+                this.$emit('paintBucketModeChanged', this.paintBucketMode);
+            }
+        },
+        cellSize: {
+            handler: function() {
+                this.$emit('cellSizeChanged', this.cellSize);
+            }
+        },
+        numCells: {
+            handler: function() {
+                this.$emit('numCellsChanged', this.numCells);
+            }
         }
     }
 }
