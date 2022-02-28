@@ -1,6 +1,7 @@
 <template>
-    <canvas ref="pixelCanvas" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
+    <canvas ref="canvas" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
             @mousemove="handleMouseMove" @mouseleave="handleMouseUp"></canvas>
+    <button ref="downloadButton" @click="downloadImage">Download</button>
 </template>
 
 <script>
@@ -18,6 +19,7 @@ export default {
             ctx: null,
             grid: [],
             mousePressed: false,
+            dataURI: ''
         }
     },
     watch: {
@@ -36,7 +38,7 @@ export default {
         }
     },
     mounted: function () {
-        let canvas = this.$refs.pixelCanvas;
+        let canvas = this.$refs.canvas;
         this.ctx = canvas.getContext('2d');
         this.updateCanvasSize();
         this.resetGrid();
@@ -52,7 +54,7 @@ export default {
             }
         },
         updateCanvasSize: function () {
-            let canvas = this.$refs.pixelCanvas;
+            let canvas = this.$refs.canvas;
             canvas.width = canvas.height = this.cellSize * this.numCells;
         },
         draw: function (row, col) {
@@ -136,6 +138,10 @@ export default {
                     this.ctx.fillRect(col * this.cellSize, row * this.cellSize, this.cellSize, this.cellSize);
                 }
             }
+        },
+        downloadImage: function () {
+            let dataURL =  this.$refs.canvas.toDataURL('image/png');
+            window.open(dataURL);
         }
     }
 }

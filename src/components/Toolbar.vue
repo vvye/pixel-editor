@@ -24,23 +24,23 @@ export default {
         }
     },
     methods: {
-        clearCanvas: function() {
+        clearCanvas: function () {
             this.$emit('clearCanvasButtonPressed');
         }
     },
     watch: {
         paintBucketMode: {
-            handler: function() {
+            handler: function () {
                 this.$emit('paintBucketModeChanged', this.paintBucketMode);
             }
         },
         cellSize: {
-            handler: function() {
+            handler: function () {
                 this.$emit('cellSizeChanged', this.cellSize);
             }
         },
         numCells: {
-            handler: function() {
+            handler: function () {
                 this.$emit('numCellsChanged', this.numCells);
             }
         }
