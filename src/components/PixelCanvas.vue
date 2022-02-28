@@ -2,6 +2,7 @@
     <canvas ref="canvas" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
             @mousemove="handleMouseMove" @mouseleave="handleMouseUp"></canvas>
     <button ref="downloadButton" @click="downloadImage">Download</button>
+    <input type="checkbox" v-model="showGridLines"> show grid lines
 </template>
 
 <script>
@@ -19,7 +20,7 @@ export default {
             ctx: null,
             grid: [],
             penDown: false,
-            dataURI: ''
+            showGridLines: false
         }
     },
     watch: {
@@ -33,6 +34,11 @@ export default {
             handler() {
                 this.updateCanvasSize();
                 this.resetGrid();
+                this.render();
+            }
+        },
+        showGridLines: {
+            handler() {
                 this.render();
             }
         }
@@ -143,6 +149,20 @@ export default {
                     let [r, g, b] = color;
                     this.ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
                     this.ctx.fillRect(col * this.cellSize, row * this.cellSize, this.cellSize, this.cellSize);
+                }
+            }
+            if (this.showGridLines) {
+                this.ctx.strokeStyle = 'rgb(128, 128, 128)';
+                this.ctx.lineWidth = 1;
+                for (let rowCol = 1; rowCol < this.numCells; rowCol++) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(0, rowCol * this.cellSize);
+                    this.ctx.lineTo(this.numCells * this.cellSize, rowCol * this.cellSize);
+                    this.ctx.stroke();
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(rowCol * this.cellSize, 0);
+                    this.ctx.lineTo(rowCol * this.cellSize, this.numCells * this.cellSize);
+                    this.ctx.stroke();
                 }
             }
         },
