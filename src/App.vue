@@ -63,7 +63,7 @@ export default {
                 [181, 222, 235, 255],
                 [0, 0, 0, 0]
             ],
-            currentColorId: 30,
+            currentColorId: 0,
             showGridLines: false,
         }
     },
