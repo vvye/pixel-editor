@@ -129,6 +129,12 @@ body, button {
     font-size: 1.2rem;
 }
 
+button, select {
+    cursor: pointer;
+    padding: 0.25rem 0.75rem;
+    margin-right: 1rem;
+}
+
 </style>
 
 <style scoped>
