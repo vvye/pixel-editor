@@ -2,7 +2,7 @@
     <div>
         <input type="checkbox" v-model="paintBucketMode" /> Paint Bucket
         <button @click="clearCanvas">Clear</button>
-        zoom: <input type="number" v-model="cellSize">
+        zoom: <input type="number" min="1" max="100" step="1" v-model="cellSize">
         dimensions: <select v-model="numCells">
         <option value="8">8x8</option>
         <option value="12">12x12</option>
