@@ -1,7 +1,6 @@
 <template>
     <canvas ref="canvas" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
             @mousemove="handleMouseMove" @mouseleave="handleMouseUp"></canvas>
-    <button ref="downloadButton" @click="downloadImage">Download</button>
 </template>
 
 <script>

@@ -2,7 +2,7 @@
     <div id="app">
         <Toolbar @paint-bucket-mode-changed="setPaintBucketMode" @clear-canvas-button-pressed="resetCanvas"
                  @cell-size-changed="setCellSize" @num-cells-changed="setNumCells"
-                 @show-grid-lines-changed="setShowGridLines"></Toolbar>
+                 @show-grid-lines-changed="setShowGridLines" @download-button-pressed="downloadCanvasImage"></Toolbar>
         <PaletteEditor ref="paletteEditor" :palette="palette" :current-color-id="currentColorId"
                        @current-color-id-changed="setCurrentColorId" @color-changed="setColor" />
         <PixelCanvas ref="pixelCanvas" :cell-size="cellSize" :num-cells="numCells" :palette="palette"
@@ -60,6 +60,9 @@ export default {
         },
         setShowGridLines(showGridLines) {
             this.showGridLines = showGridLines;
+        },
+        downloadCanvasImage() {
+            this.$refs.pixelCanvas.downloadImage();
         },
         resetCanvas() {
             this.currentColorId = this.$refs.paletteEditor.currentColorId = 0;

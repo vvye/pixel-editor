@@ -1,7 +1,8 @@
 <template>
     <div>
         <input type="checkbox" v-model="paintBucketMode" /> Paint Bucket
-        <button @click="clearCanvas">Clear</button>
+        <button @click="clearCanvasButtonPressed">Clear</button>
+        <button ref="downloadButton" @click="downloadButtonPressed">Download</button>
         zoom: <input type="number" min="1" max="100" step="1" v-model="cellSize">
         dimensions:
         <select v-model="numCells">
@@ -27,8 +28,11 @@ export default {
         }
     },
     methods: {
-        clearCanvas() {
+        clearCanvasButtonPressed() {
             this.$emit('clearCanvasButtonPressed');
+        },
+        downloadButtonPressed() {
+            this.$emit('downloadButtonPressed');
         }
     },
     watch: {
