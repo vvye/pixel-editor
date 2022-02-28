@@ -1,6 +1,7 @@
 <template>
     <div>
         <input type="checkbox" v-model="paintBucketMode" @change="changePaintBucketMode" /> Paint Bucket
+        <button @click="clearCanvas">Clear</button>
     </div>
 </template>
 
@@ -16,6 +17,9 @@ export default {
     methods: {
         changePaintBucketMode: function () {
             this.$emit('paintBucketModeChanged', this.paintBucketMode);
+        },
+        clearCanvas: function() {
+            this.$emit('clearCanvasButtonPressed');
         }
     }
 }

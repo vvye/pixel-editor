@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <Toolbar @paint-bucket-mode-changed="changePaintBucketMode"></Toolbar>
-        <PaletteEditor :palette="palette" :current-color-id="currentColorId"
+        <Toolbar @paint-bucket-mode-changed="changePaintBucketMode" @clear-canvas-button-pressed="resetCanvas"></Toolbar>
+        <PaletteEditor ref="paletteEditor" :palette="palette" :current-color-id="currentColorId"
                        @current-color-id-changed="changeCurrentColorId" @color-changed="changeColor" />
         <PixelCanvas ref="pixelCanvas" :cell-size="cellSize" :num-cells="numCells" :palette="palette"
                      :current-color-id="currentColorId" :paint-bucket-mode="paintBucketMode" />
@@ -43,19 +43,25 @@ export default {
         Toolbar
     },
     methods: {
-        changeCurrentColorId: function (index) {
-            this.currentColorId = index;
+        changeCurrentColorId: function (id) {
+            this.currentColorId = id;
         },
-        changeColor: function (index, color) {
-            this.palette[index] = color;
+        changeColor: function (id, color) {
+            this.palette[id] = color;
             this.refreshCanvas();
         },
         changePaintBucketMode: function (value) {
             this.paintBucketMode = value;
         },
         refreshCanvas: function () {
-            let canvas = this.$refs.pixelCanvas;
-            canvas.render();
+            this.$refs.pixelCanvas.render();
+        },
+        resetCanvas: function() {
+            this.currentColorId = this.$refs.paletteEditor.currentColorId = 0;
+            setTimeout(() => {
+                this.$refs.pixelCanvas.resetGrid();
+                this.refreshCanvas();
+            }, 50); // wait for currentColorId change to register
         }
     }
 }
