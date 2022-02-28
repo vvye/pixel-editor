@@ -25,10 +25,19 @@ div {
     width: 8.3333%;
     height: 0;
     padding-bottom: 8.3333%;
+    cursor: pointer;
+    transition: all 0.05s ease;
+}
+
+div:hover {
+    transform: scale(1.075);
+    border-radius: 0.125rem;
 }
 
 div.selected {
-    transform: scale(1.1);
+    transform: scale(1.2);
     border-radius: 0.25rem;
+    box-shadow: 0 0 0.125rem rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 </style>

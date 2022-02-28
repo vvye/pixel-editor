@@ -4,8 +4,10 @@
             <button @click="clearCanvasButtonPressed">Clear</button>
             <button ref="downloadButton" @click="downloadButtonPressed">Download</button>
         </div>
-        <input type="radio" v-model="paintBucketMode" value="false" /> Pen
-        <input type="radio" v-model="paintBucketMode" value="true" /> Paint Bucket
+        <div>
+            <button :class="{pressed: !paintBucketMode}" @click="paintBucketMode = false">Pen</button>
+            <button :class="{pressed: paintBucketMode}" @click="paintBucketMode = true">Paint Bucket</button>
+        </div>
         <div>
             zoom: <input type="range" min="1" max="100" step="1" v-model="cellSize">
             dimensions:
@@ -70,6 +72,12 @@ export default {
 <style scoped>
 .toolbar-container {
     margin-bottom: 2rem;
+}
+
+.toolbar-container > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
 </style>

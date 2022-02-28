@@ -131,8 +131,22 @@ body, button {
 
 button, select {
     cursor: pointer;
-    padding: 0.25rem 0.75rem;
+    padding: 0.5rem 1rem;
     margin-right: 1rem;
+    background-color: #4e5f6a;
+    border: none;
+    box-shadow: 0 0.125rem 0 #151d23;
+    border-radius: 0.25rem;
+    color: #c9ccce;
+}
+
+button:hover, select:hover {
+    background-color: #5e707c;
+}
+
+button.pressed {
+    background-color: #5e707c;
+    box-shadow: inset 0 0.125rem 0 #151d23;
 }
 
 </style>
