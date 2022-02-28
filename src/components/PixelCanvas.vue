@@ -19,7 +19,8 @@ export default {
             ctx: null,
             grid: [],
             penDown: false,
-            defaultColorId: 30
+            defaultColorId: 30,
+            prevMousePosition: null
         }
     },
     watch: {
@@ -132,13 +133,30 @@ export default {
         },
         handleMouseUp() {
             this.penDown = false;
+            this.prevMousePosition = null;
         },
         handleMouseMove(e) {
-            if (this.penDown) {
-                this.mouseDown(e.offsetX, e.offsetY);
+            if (!this.penDown) {
+                return;
             }
+
+            this.mouseDown(e.offsetX, e.offsetY);
+
+            // if the cursor moved too fast, interpolate drawing between the last drawn position and the current one
+            let [currX, currY] = [e.offsetX, e.offsetY];
+            if (this.prevMousePosition !== null) {
+                let [prevX, prevY] = this.prevMousePosition;
+                for (let t = 0; t < 1; t += 0.05) {
+                    let x = t * currX + (1 - t) * prevX;
+                    let y = t * currY + (1 - t) * prevY;
+                    console.log(x, y);
+                    this.mouseDown(x, y, false); // don't render these intermediate steps
+                }
+            }
+            this.prevMousePosition = [currX, currY];
+            this.render();
         },
-        mouseDown(x, y) {
+        mouseDown(x, y, render = true) {
             let row = Math.floor(y / this.cellSize);
             let col = Math.floor(x / this.cellSize);
             if (row < 0 || row >= this.numCells || col < 0 || col >= this.numCells) {
@@ -150,7 +168,9 @@ export default {
             } else {
                 this.draw(row, col);
             }
-            this.render();
+            if (render) {
+                this.render();
+            }
         },
         render() {
             this.ctx.clearRect(0, 0, this.numCells * this.cellSize, this.numCells * this.cellSize);
