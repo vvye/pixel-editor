@@ -11,6 +11,7 @@ export default {
         numCells: Number,
         currentColorIndex: Number,
         palette: Array,
+        paintBucketMode: Boolean
     },
     data: function () {
         return {
@@ -27,7 +28,7 @@ export default {
             }
         },
         numCells: {
-            handler: function() {
+            handler: function () {
                 this.updateCanvasSize();
                 this.resetGrid();
                 this.redraw();
@@ -57,11 +58,26 @@ export default {
         draw: function (x, y) {
             let row = Math.floor(y / this.cellSize);
             let col = Math.floor(x / this.cellSize);
-            this.drawRowCol(row, col);
+            if (this.paintBucketMode) {
+                this.floodFill(row, col);
+            } else {
+                this.drawRowCol(row, col);
+            }
         },
         drawRowCol: function (row, col) {
             this.grid[row][col] = this.currentColorIndex;
             this.redraw();
+        },
+        floodFill: function (row, col) {
+        },
+        neighbors: function (row, col) {
+            let neighbors = [];
+            for (let [newRow, newCol] of [[row, col - 1] , [row, col + 1], [row + 1, col], [row - 1, col]]) {
+                if (!(newRow < 0 || newRow >= this.numCells || newCol < 0 || newCol >= this.numCells)) {
+                    neighbors.push([newRow, newCol]);
+                }
+            }
+            return neighbors;
         },
         handleMouseDown: function (e) {
             this.penDown = true;

@@ -1,9 +1,10 @@
 <template>
     <div id="app">
+        <Toolbar @paint-bucket-mode-changed="changePaintBucketMode"></Toolbar>
         <PaletteEditor :palette="palette" :current-color-index="currentColorIndex"
                        @current-color-index-changed="changeCurrentColorIndex" @color-changed="changeColor" />
         <PixelCanvas ref="pixelCanvas" :cell-size="cellSize" :num-cells="numCells" :palette="palette"
-                     :current-color-index="currentColorIndex" />
+                     :current-color-index="currentColorIndex" :paint-bucket-mode="paintBucketMode" />
         <br />
         zoom: <input type="number" v-model="cellSize">
         dimensions: <select v-model="numCells">
@@ -18,6 +19,7 @@
 <script>
 import PixelCanvas from '@/components/PixelCanvas.vue'
 import PaletteEditor from '@/components/PaletteEditor'
+import Toolbar from '@/components/Toolbar';
 
 export default {
     name: 'App',
@@ -25,6 +27,7 @@ export default {
         return {
             cellSize: 32,
             numCells: 8,
+            paintBucketMode: false,
             palette: [
                 [0, 0, 0],
                 [255, 0, 0], [0, 255, 0], [0, 0, 255],
@@ -36,7 +39,8 @@ export default {
     },
     components: {
         PixelCanvas,
-        PaletteEditor
+        PaletteEditor,
+        Toolbar
     },
     methods: {
         changeCurrentColorIndex: function (index) {
@@ -46,7 +50,10 @@ export default {
             this.palette[index] = color;
             this.refreshCanvas();
         },
-        refreshCanvas: function() {
+        changePaintBucketMode: function (value) {
+            this.paintBucketMode = value;
+        },
+        refreshCanvas: function () {
             let canvas = this.$refs.pixelCanvas;
             canvas.redraw();
         }
