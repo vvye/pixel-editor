@@ -9,7 +9,7 @@ export default {
     props: {
         cellSize: Number,
         numCells: Number,
-        currentColorIndex: Number,
+        currentColorId: Number,
         palette: Array,
         paintBucketMode: Boolean
     },
@@ -17,21 +17,21 @@ export default {
         return {
             ctx: null,
             grid: [],
-            penDown: false,
+            mousePressed: false,
         }
     },
     watch: {
         cellSize: {
             handler: function () {
                 this.updateCanvasSize();
-                this.redraw();
+                this.render();
             }
         },
         numCells: {
             handler: function () {
                 this.updateCanvasSize();
                 this.resetGrid();
-                this.redraw();
+                this.render();
             }
         }
     },
@@ -40,63 +40,60 @@ export default {
         this.ctx = canvas.getContext('2d');
         this.updateCanvasSize();
         this.resetGrid();
-        this.redraw();
+        this.render();
     },
     methods: {
         resetGrid: function () {
-            for (let i = 0; i < this.numCells * this.numCells; i++) {
-                this.grid[i] = 0;
+            for (let row = 0; row < this.numCells; row++) {
+                this.grid[row] = [];
+                for (let col = 0; col < this.numCells; col++) {
+                    this.grid[row][col] = this.currentColorId;
+                }
             }
         },
         updateCanvasSize: function () {
             let canvas = this.$refs.pixelCanvas;
             canvas.width = canvas.height = this.cellSize * this.numCells;
         },
-        draw: function (x, y) {
-            let row = Math.floor(y / this.cellSize);
-            let col = Math.floor(x / this.cellSize);
-            if (this.paintBucketMode) {
-                this.floodFill(row, col);
-            } else {
-                this.drawRowCol(row, col);
-            }
-        },
-        drawRowCol: function (row, col) {
-            this.drawOnGridAt(row, col);
-            this.redraw();
+        draw: function (row, col) {
+            this.grid[row][col] = this.currentColorId;
         },
         floodFill: function (row, col) {
-            let targetColorIndex = this.gridAt(row, col);
+            let targetColorId = this.grid[row][col];
 
+            // mark the starting cell as active
             let active = [];
-            for (let i = 0; i < this.numCells * this.numCells; i++) {
-                active[i] = false;
+            for (let r = 0; r < this.numCells; r++) {
+                active[r] = [];
+                for (let c = 0; c < this.numCells; c++) {
+                    active[r][c] = false;
+                }
             }
-            active[this.cellId(row, col)] = true;
+            active[row][col] = true;
+            let numActive = 1;
 
-            while (active.some(b => b)) {
-                for (let i = 0; i < this.numCells * this.numCells; i++) {
-                    if (!active[i]) {
-                        continue;
-                    }
-                    let [cRow, cCol] = this.rowColFromCellId(i);
-                    active[this.cellId(cRow, cCol)] = false;
-                    this.drawOnGridAt(cRow, cCol);
-
-                    for (let [nRow, nCol] of this.neighbors(cRow, cCol)) {
-                        // if that neighbor is already active, continue
-                        if (active[this.cellId(nRow, nCol)]) {
+            // while active cells exist, loop through them
+            while (numActive) {
+                for (let currRow = 0; currRow < this.numCells; currRow++) {
+                    for (let currCol = 0; currCol < this.numCells; currCol++) {
+                        if (!active[currRow][currCol]) {
                             continue;
                         }
-                        // if that neighbor is not part of the area to fill, continue
-                        if (this.gridAt(nRow, nCol) !== targetColorIndex) {
-                            continue;
+                        // draw on the current cell and mark it as inactive
+                        this.draw(currRow, currCol);
+                        active[currRow][currCol] = false;
+                        numActive--;
+
+                        // mark all neighbors as active if they're inactive and part of the fillable area
+                        for (let [nRow, nCol] of this.neighbors(currRow, currCol)) {
+                            if (!active[nRow][nCol] && this.grid[nRow][nCol] === targetColorId) {
+                                active[nRow][nCol] = true;
+                                numActive++;
+                            }
                         }
-                        active[this.cellId(nRow, nCol)] = true;
                     }
                 }
             }
-            this.redraw();
         },
         neighbors: function (row, col) {
             let neighbors = [];
@@ -108,40 +105,37 @@ export default {
             return neighbors;
         },
         handleMouseDown: function (e) {
-            this.penDown = true;
-            this.draw(e.offsetX, e.offsetY);
+            this.mousePressed = true;
+            this.mouseDown(e.offsetX, e.offsetY);
         },
         handleMouseUp: function () {
-            this.penDown = false;
+            this.mousePressed = false;
         },
         handleMouseMove: function (e) {
-            if (this.penDown) {
-                this.draw(e.offsetX, e.offsetY);
+            if (this.mousePressed) {
+                this.mouseDown(e.offsetX, e.offsetY);
             }
         },
-        redraw: function () {
+        mouseDown: function (x, y) {
+            let row = Math.floor(y / this.cellSize);
+            let col = Math.floor(x / this.cellSize);
+            if (this.paintBucketMode) {
+                this.floodFill(row, col);
+            } else {
+                this.draw(row, col);
+            }
+            this.render();
+        },
+        render: function () {
             for (let row = 0; row < this.numCells; row++) {
                 for (let col = 0; col < this.numCells; col++) {
-                    let index = this.gridAt(row, col);
+                    let index = this.grid[row][col];
                     let color = this.palette[index];
                     let [r, g, b] = color;
                     this.ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
                     this.ctx.fillRect(col * this.cellSize, row * this.cellSize, this.cellSize, this.cellSize);
                 }
             }
-        },
-        gridAt: function (row, col) {
-            let gridIndex = this.cellId(row, col);
-            return this.grid[gridIndex];
-        },
-        drawOnGridAt: function (row, col) {
-            this.grid[row * this.numCells + col] = this.currentColorIndex;
-        },
-        cellId: function (row, col) {
-            return row * this.numCells + col;
-        },
-        rowColFromCellId: function (index) {
-            return [Math.floor(index / this.numCells), index % this.numCells];
         }
     }
 }

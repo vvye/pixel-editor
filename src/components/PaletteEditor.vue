@@ -1,8 +1,8 @@
 <template>
     <div>
-        <PaletteEntry v-for="(color, index) in this.palette" :key="index"
-                      :color="color" :selected="this.currentColorIndex === index"
-                      @click="selectColor(index)" />
+        <PaletteEntry v-for="(color, id) in this.palette" :key="id"
+                      :color="color" :selected="this.currentColorId === id"
+                      @click="selectColor(id)" />
         <input type="color" :value="this.selectedColorAsHex" @change="changeSelectedColor" />
     </div>
 </template>
@@ -17,7 +17,7 @@ export default {
     },
     data: function () {
         return {
-            currentColorIndex: 0
+            currentColorId: 0
         }
     },
     props: {
@@ -25,14 +25,14 @@ export default {
     },
     computed: {
         selectedColorAsHex: function () {
-            let color = this.palette[this.currentColorIndex];
+            let color = this.palette[this.currentColorId];
             return '#' + color.map(n => n.toString(16).padStart(2, '0')).join('');
         }
     },
     methods: {
-        selectColor: function (index) {
-            this.currentColorIndex = index;
-            this.$emit('currentColorIndexChanged', index);
+        selectColor: function (id) {
+            this.currentColorId = id;
+            this.$emit('currentColorIdChanged', id);
         },
         changeSelectedColor: function (e) {
             let newColorHex = e.target.value;
@@ -40,7 +40,7 @@ export default {
             let g = parseInt(newColorHex.substring(3, 5), 16);
             let b = parseInt(newColorHex.substring(5, 7), 16);
             let newColor = [r, g, b];
-            this.$emit('colorChanged', this.currentColorIndex, newColor);
+            this.$emit('colorChanged', this.currentColorId, newColor);
         }
     }
 }

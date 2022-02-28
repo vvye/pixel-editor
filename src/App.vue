@@ -1,10 +1,10 @@
 <template>
     <div id="app">
         <Toolbar @paint-bucket-mode-changed="changePaintBucketMode"></Toolbar>
-        <PaletteEditor :palette="palette" :current-color-index="currentColorIndex"
-                       @current-color-index-changed="changeCurrentColorIndex" @color-changed="changeColor" />
+        <PaletteEditor :palette="palette" :current-color-id="currentColorId"
+                       @current-color-id-changed="changeCurrentColorId" @color-changed="changeColor" />
         <PixelCanvas ref="pixelCanvas" :cell-size="cellSize" :num-cells="numCells" :palette="palette"
-                     :current-color-index="currentColorIndex" :paint-bucket-mode="paintBucketMode" />
+                     :current-color-id="currentColorId" :paint-bucket-mode="paintBucketMode" />
         <br />
         zoom: <input type="number" v-model="cellSize">
         dimensions: <select v-model="numCells">
@@ -34,7 +34,7 @@ export default {
                 [255, 255, 0], [0, 255, 255], [255, 0, 255],
                 [255, 255, 255]
             ],
-            currentColorIndex: 0
+            currentColorId: 0
         }
     },
     components: {
@@ -43,8 +43,8 @@ export default {
         Toolbar
     },
     methods: {
-        changeCurrentColorIndex: function (index) {
-            this.currentColorIndex = index;
+        changeCurrentColorId: function (index) {
+            this.currentColorId = index;
         },
         changeColor: function (index, color) {
             this.palette[index] = color;
@@ -55,7 +55,7 @@ export default {
         },
         refreshCanvas: function () {
             let canvas = this.$refs.pixelCanvas;
-            canvas.redraw();
+            canvas.render();
         }
     }
 }
