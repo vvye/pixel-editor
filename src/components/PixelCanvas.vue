@@ -63,14 +63,19 @@ export default {
         floodFill: function (row, col) {
             let targetColorId = this.grid[row][col];
 
-            // mark the starting cell as active
+            // keep track of visited and active cells
             let active = [];
+            let visited = [];
             for (let r = 0; r < this.numCells; r++) {
                 active[r] = [];
+                visited[r] = [];
                 for (let c = 0; c < this.numCells; c++) {
                     active[r][c] = false;
+                    visited[r][c] = false;
                 }
             }
+
+            // mark the starting cell as active
             active[row][col] = true;
             let numActive = 1;
 
@@ -84,11 +89,12 @@ export default {
                         // draw on the current cell and mark it as inactive
                         this.draw(currRow, currCol);
                         active[currRow][currCol] = false;
+                        visited[currRow][currCol] = true;
                         numActive--;
 
-                        // mark all neighbors as active if they're inactive and part of the fillable area
+                        // mark all neighbors as active if they're inactive, not visited and part of the fillable area
                         for (let [nRow, nCol] of this.neighbors(currRow, currCol)) {
-                            if (!active[nRow][nCol] && this.grid[nRow][nCol] === targetColorId) {
+                            if (!active[nRow][nCol] && !visited[nRow][nCol] && this.grid[nRow][nCol] === targetColorId) {
                                 active[nRow][nCol] = true;
                                 numActive++;
                             }
@@ -107,9 +113,7 @@ export default {
             return neighbors;
         },
         handleMouseDown: function (e) {
-            if (!this.paintBucketMode) {
-                this.penDown = true;
-            }
+            this.penDown = true;
             this.mouseDown(e.offsetX, e.offsetY);
         },
         handleMouseUp: function () {
@@ -123,7 +127,8 @@ export default {
         mouseDown: function (x, y) {
             let row = Math.floor(y / this.cellSize);
             let col = Math.floor(x / this.cellSize);
-            if (this.paintBucketMode) {
+            if (this.paintBucketMode && this.penDown) {
+                this.penDown = false;
                 this.floodFill(row, col);
             } else {
                 this.draw(row, col);
