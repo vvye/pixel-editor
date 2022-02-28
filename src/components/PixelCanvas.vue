@@ -18,7 +18,8 @@ export default {
         return {
             ctx: null,
             grid: [],
-            penDown: false
+            penDown: false,
+            defaultColorId: 0
         }
     },
     watch: {
@@ -31,7 +32,6 @@ export default {
         numCells: {
             handler() {
                 this.updateCanvasSize();
-                this.resetGrid();
                 this.render();
             }
         },
@@ -53,13 +53,23 @@ export default {
             for (let row = 0; row < this.numCells; row++) {
                 this.grid[row] = [];
                 for (let col = 0; col < this.numCells; col++) {
-                    this.grid[row][col] = this.currentColorId;
+                    this.grid[row][col] = this.defaultColorId;
                 }
             }
         },
         updateCanvasSize() {
             let canvas = this.$refs.canvas;
             canvas.width = canvas.height = this.cellSize * this.numCells;
+            for (let row = 0; row < this.numCells; row++) {
+                if (this.grid[row] === undefined) { // keep existing pixels if resized
+                    this.grid[row] = [];
+                }
+                for (let col = 0; col < this.numCells; col++) {
+                    if (this.grid[row][col] === undefined) {  // keep existing pixels if resized
+                        this.grid[row][col] = this.defaultColorId;
+                    }
+                }
+            }
         },
         draw(row, col) {
             this.grid[row][col] = this.currentColorId;

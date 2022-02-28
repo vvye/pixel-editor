@@ -65,11 +65,8 @@ export default {
             this.$refs.pixelCanvas.downloadImage();
         },
         resetCanvas() {
-            this.currentColorId = this.$refs.paletteEditor.currentColorId = 0;
-            setTimeout(() => {
-                this.$refs.pixelCanvas.resetGrid();
-                this.refreshCanvas();
-            }, 50); // wait for currentColorId change to register
+            this.$refs.pixelCanvas.resetGrid();
+            this.refreshCanvas();
         }
     }
 }
