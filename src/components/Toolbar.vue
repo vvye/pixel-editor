@@ -1,17 +1,23 @@
 <template>
-    <div>
+    <div class="toolbar-container">
+        <div>
+            <button @click="clearCanvasButtonPressed">Clear</button>
+            <button ref="downloadButton" @click="downloadButtonPressed">Download</button>
+        </div>
         <input type="checkbox" v-model="paintBucketMode" /> Paint Bucket
-        <button @click="clearCanvasButtonPressed">Clear</button>
-        <button ref="downloadButton" @click="downloadButtonPressed">Download</button>
-        zoom: <input type="range" min="1" max="100" step="1" v-model="cellSize">
-        dimensions:
-        <select v-model="numCells">
-            <option value="8">8x8</option>
-            <option value="12">12x12</option>
-            <option value="16">16x16</option>
-            <option value="32">32x32</option>
-        </select>
-        <input type="checkbox" v-model="showGridLines" /> show grid lines
+        <div>
+            zoom: <input type="range" min="1" max="100" step="1" v-model="cellSize">
+            dimensions:
+            <select v-model="numCells">
+                <option value="8">8x8</option>
+                <option value="12">12x12</option>
+                <option value="16">16x16</option>
+                <option value="32">32x32</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" v-model="showGridLines" /> show grid lines
+        </div>
     </div>
 </template>
 
@@ -61,5 +67,13 @@ export default {
 </script>
 
 <style scoped>
+.toolbar-container {
+    margin-bottom: 2rem;
+}
+
+button {
+    padding: 0.25rem 0.75rem;
+    margin-right: 1rem;
+}
 
 </style>

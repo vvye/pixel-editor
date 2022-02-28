@@ -22,11 +22,12 @@ export default {
 <style scoped>
 div {
     background-color: var(--bg-color);
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.4rem;
+    height: 2.4rem;
 }
 
 div.selected {
     transform: scale(1.1);
+    border-radius: 0.25rem;
 }
 </style>
