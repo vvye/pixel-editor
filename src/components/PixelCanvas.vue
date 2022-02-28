@@ -2,7 +2,6 @@
     <canvas ref="canvas" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
             @mousemove="handleMouseMove" @mouseleave="handleMouseUp"></canvas>
     <button ref="downloadButton" @click="downloadImage">Download</button>
-    <input type="checkbox" v-model="showGridLines"> show grid lines
 </template>
 
 <script>
@@ -13,14 +12,14 @@ export default {
         numCells: Number,
         currentColorId: Number,
         palette: Array,
-        paintBucketMode: Boolean
+        paintBucketMode: Boolean,
+        showGridLines: Boolean
     },
     data() {
         return {
             ctx: null,
             grid: [],
-            penDown: false,
-            showGridLines: false
+            penDown: false
         }
     },
     watch: {

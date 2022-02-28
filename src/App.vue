@@ -1,11 +1,13 @@
 <template>
     <div id="app">
         <Toolbar @paint-bucket-mode-changed="setPaintBucketMode" @clear-canvas-button-pressed="resetCanvas"
-        @cell-size-changed="setCellSize" @num-cells-changed="setNumCells"></Toolbar>
+                 @cell-size-changed="setCellSize" @num-cells-changed="setNumCells"
+                 @show-grid-lines-changed="setShowGridLines"></Toolbar>
         <PaletteEditor ref="paletteEditor" :palette="palette" :current-color-id="currentColorId"
                        @current-color-id-changed="setCurrentColorId" @color-changed="setColor" />
         <PixelCanvas ref="pixelCanvas" :cell-size="cellSize" :num-cells="numCells" :palette="palette"
-                     :current-color-id="currentColorId" :paint-bucket-mode="paintBucketMode" />
+                     :current-color-id="currentColorId" :paint-bucket-mode="paintBucketMode"
+                     :show-grid-lines="showGridLines" />
     </div>
 </template>
 
@@ -27,7 +29,8 @@ export default {
                 [255, 255, 0], [0, 255, 255], [255, 0, 255],
                 [255, 255, 255]
             ],
-            currentColorId: 0
+            currentColorId: 0,
+            showGridLines: false,
         }
     },
     components: {
@@ -54,6 +57,9 @@ export default {
         },
         refreshCanvas() {
             this.$refs.pixelCanvas.render();
+        },
+        setShowGridLines(showGridLines) {
+            this.showGridLines = showGridLines;
         },
         resetCanvas() {
             this.currentColorId = this.$refs.paletteEditor.currentColorId = 0;

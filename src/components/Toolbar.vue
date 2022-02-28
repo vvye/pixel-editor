@@ -3,12 +3,14 @@
         <input type="checkbox" v-model="paintBucketMode" /> Paint Bucket
         <button @click="clearCanvas">Clear</button>
         zoom: <input type="number" min="1" max="100" step="1" v-model="cellSize">
-        dimensions: <select v-model="numCells">
-        <option value="8">8x8</option>
-        <option value="12">12x12</option>
-        <option value="16">16x16</option>
-        <option value="32">32x32</option>
-    </select>
+        dimensions:
+        <select v-model="numCells">
+            <option value="8">8x8</option>
+            <option value="12">12x12</option>
+            <option value="16">16x16</option>
+            <option value="32">32x32</option>
+        </select>
+        <input type="checkbox" v-model="showGridLines" /> show grid lines
     </div>
 </template>
 
@@ -21,6 +23,7 @@ export default {
             paintBucketMode: false,
             cellSize: 32,
             numCells: 8,
+            showGridLines: false,
         }
     },
     methods: {
@@ -42,6 +45,11 @@ export default {
         numCells: {
             handler() {
                 this.$emit('numCellsChanged', this.numCells);
+            }
+        },
+        showGridLines: {
+            handler() {
+                this.$emit('showGridLinesChanged', this.showGridLines);
             }
         }
     }
