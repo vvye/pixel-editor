@@ -146,9 +146,12 @@ button:hover, .button:hover, select:hover {
     background-color: #5e707c;
 }
 
-button.pressed {
-    background-color: #5e707c;
-    box-shadow: inset 0 0.25rem 0 #212a33;
+button:active, button.pressed {
+    background-color: #73848f;
+    box-shadow: inset 0 0.25rem 0 #252d35;
+    padding-top: 0.6rem;
+    padding-bottom: 0.4rem;
+    text-shadow: 0 0.125rem 0.125rem #2b3a44;
 }
 
 .transparent {
@@ -184,10 +187,40 @@ h1 {
     margin-left: -0.2rem;
     margin-bottom: 0.5rem;
     text-shadow: 0 0.25rem 0 #0e151a;
+    color: #e4e5e7;
+    animation: slide-in 0.4s;
+}
+
+h1:hover {
+    transform: rotate(2deg);
+    transition: all 0.05s;
 }
 
 h1 + p {
+    font-family: 'Bungee', sans-serif;
+    margin-top: -1rem;
     margin-bottom: 2rem;
+    font-size: 1.5rem;
+    animation: slide-in 0.4s;
+}
+
+@keyframes slide-in {
+    0% {
+        transform: translateY(4rem) scale(0.95);
+        opacity: 0;
+    }
+    60%, 85% {
+        transform: translateY(-0.5rem) scale(1) rotate(2deg);
+        opacity: 1;
+    }
+    97% {
+        transform: translateY(-0.125rem);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 </style>

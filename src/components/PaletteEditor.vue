@@ -4,7 +4,7 @@
                       :color="color" :selected="this.currentColorId === id"
                       @click="selectColor(id)" />
     </div>
-    <label class="button">
+    <label class="button" v-if="this.currentColorId !== 30">
         <input type="color" :value="this.selectedColorAsHex" @input="changeSelectedColor"> Edit selected color
     </label>
 </template>
@@ -19,7 +19,7 @@ export default {
     },
     data() {
         return {
-            currentColorId: 30
+            currentColorId: 0
         }
     },
     props: {
@@ -50,6 +50,7 @@ export default {
 
 <style scoped>
 .palette-container {
+    margin-top: 3rem;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
