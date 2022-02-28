@@ -129,7 +129,7 @@ body, button {
     font-size: 1.2rem;
 }
 
-button, select {
+button, .button, select {
     cursor: pointer;
     padding: 0.5rem 1rem;
     margin-right: 1rem;
@@ -138,9 +138,10 @@ button, select {
     box-shadow: 0 0.125rem 0 #151d23;
     border-radius: 0.25rem;
     color: #c9ccce;
+    transition: all 0.05s ease;
 }
 
-button:hover, select:hover {
+button:hover, .button:hover, select:hover {
     background-color: #5e707c;
 }
 

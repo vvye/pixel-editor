@@ -4,11 +4,9 @@
                       :color="color" :selected="this.currentColorId === id"
                       @click="selectColor(id)" />
     </div>
-    <div class="palette-container">
-        <label>
-            <input type="color" :value="this.selectedColorAsHex" @input="changeSelectedColor" /> Edit selected color
-        </label>
-    </div>
+    <label class="button">
+        <input type="color" :value="this.selectedColorAsHex" @input="changeSelectedColor"> Edit selected color
+    </label>
 </template>
 
 <script>
@@ -61,4 +59,18 @@ export default {
     box-shadow: inset 0 0.25rem 0 #0e151a;
     overflow: hidden;
 }
+
+input[type="color"] {
+    margin-right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: none;
+}
+
+label {
+    display: inline-flex;
+    align-items: center;
+}
+
 </style>
