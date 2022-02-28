@@ -141,6 +141,9 @@ export default {
         mouseDown(x, y) {
             let row = Math.floor(y / this.cellSize);
             let col = Math.floor(x / this.cellSize);
+            if (row < 0 || row >= this.numCells || col < 0 || col >= this.numCells) {
+                return;
+            }
             if (this.paintBucketMode && this.penDown) {
                 this.penDown = false;
                 this.floodFill(row, col);
