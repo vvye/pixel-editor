@@ -62,14 +62,45 @@ export default {
             }
         },
         drawRowCol: function (row, col) {
-            this.grid[row * this.numCells + col] = this.currentColorIndex;
+            this.drawOnGridAt(row, col);
             this.redraw();
         },
         floodFill: function (row, col) {
+            let targetColorIndex = this.gridAt(row, col);
+
+            let active = [];
+            for (let i = 0; i < this.numCells * this.numCells; i++) {
+                active[i] = false;
+            }
+            active[this.cellId(row, col)] = true;
+
+            while (active.some(b => b)) {
+                for (let i = 0; i < this.numCells * this.numCells; i++) {
+                    if (!active[i]) {
+                        continue;
+                    }
+                    let [cRow, cCol] = this.rowColFromCellId(i);
+                    active[this.cellId(cRow, cCol)] = false;
+                    this.drawOnGridAt(cRow, cCol);
+
+                    for (let [nRow, nCol] of this.neighbors(cRow, cCol)) {
+                        // if that neighbor is already active, continue
+                        if (active[this.cellId(nRow, nCol)]) {
+                            continue;
+                        }
+                        // if that neighbor is not part of the area to fill, continue
+                        if (this.gridAt(nRow, nCol) !== targetColorIndex) {
+                            continue;
+                        }
+                        active[this.cellId(nRow, nCol)] = true;
+                    }
+                }
+            }
+            this.redraw();
         },
         neighbors: function (row, col) {
             let neighbors = [];
-            for (let [newRow, newCol] of [[row, col - 1] , [row, col + 1], [row + 1, col], [row - 1, col]]) {
+            for (let [newRow, newCol] of [[row, col - 1], [row, col + 1], [row + 1, col], [row - 1, col]]) {
                 if (!(newRow < 0 || newRow >= this.numCells || newCol < 0 || newCol >= this.numCells)) {
                     neighbors.push([newRow, newCol]);
                 }
@@ -99,9 +130,18 @@ export default {
                 }
             }
         },
-        gridAt: function(row, col) {
-            let gridIndex = row * this.numCells + col;
-            return this.grid[gridIndex]
+        gridAt: function (row, col) {
+            let gridIndex = this.cellId(row, col);
+            return this.grid[gridIndex];
+        },
+        drawOnGridAt: function (row, col) {
+            this.grid[row * this.numCells + col] = this.currentColorIndex;
+        },
+        cellId: function (row, col) {
+            return row * this.numCells + col;
+        },
+        rowColFromCellId: function (index) {
+            return [Math.floor(index / this.numCells), index % this.numCells];
         }
     }
 }
