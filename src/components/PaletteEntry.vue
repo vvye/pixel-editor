@@ -22,8 +22,9 @@ export default {
 <style scoped>
 div {
     background-color: var(--bg-color);
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 8.3333%;
+    height: 0;
+    padding-bottom: 8.3333%;
 }
 
 div.selected {

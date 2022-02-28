@@ -54,9 +54,11 @@ export default {
 .palette-container {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     margin-bottom: 1rem;
     background-color: #151d23;
     border-radius: 0.25rem;
     box-shadow: inset 0 0.25rem 0 #0e151a;
+    overflow: hidden;
 }
 </style>
