@@ -15,7 +15,7 @@ export default {
     components: {
         PaletteEntry
     },
-    data: function () {
+    data() {
         return {
             currentColorId: 0
         }
@@ -24,17 +24,17 @@ export default {
         palette: Array
     },
     computed: {
-        selectedColorAsHex: function () {
+        selectedColorAsHex() {
             let color = this.palette[this.currentColorId];
             return '#' + color.map(n => n.toString(16).padStart(2, '0')).join('');
         }
     },
     methods: {
-        selectColor: function (id) {
+        selectColor(id) {
             this.currentColorId = id;
             this.$emit('currentColorIdChanged', id);
         },
-        changeSelectedColor: function (e) {
+        changeSelectedColor(e) {
             let newColorHex = e.target.value;
             let r = parseInt(newColorHex.substring(1, 3), 16);
             let g = parseInt(newColorHex.substring(3, 5), 16);

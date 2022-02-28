@@ -14,7 +14,7 @@ export default {
         palette: Array,
         paintBucketMode: Boolean
     },
-    data: function () {
+    data() {
         return {
             ctx: null,
             grid: [],
@@ -24,20 +24,20 @@ export default {
     },
     watch: {
         cellSize: {
-            handler: function () {
+            handler() {
                 this.updateCanvasSize();
                 this.render();
             }
         },
         numCells: {
-            handler: function () {
+            handler() {
                 this.updateCanvasSize();
                 this.resetGrid();
                 this.render();
             }
         }
     },
-    mounted: function () {
+    mounted() {
         let canvas = this.$refs.canvas;
         this.ctx = canvas.getContext('2d');
         this.updateCanvasSize();
@@ -45,7 +45,7 @@ export default {
         this.render();
     },
     methods: {
-        resetGrid: function () {
+        resetGrid() {
             for (let row = 0; row < this.numCells; row++) {
                 this.grid[row] = [];
                 for (let col = 0; col < this.numCells; col++) {
@@ -53,14 +53,14 @@ export default {
                 }
             }
         },
-        updateCanvasSize: function () {
+        updateCanvasSize() {
             let canvas = this.$refs.canvas;
             canvas.width = canvas.height = this.cellSize * this.numCells;
         },
-        draw: function (row, col) {
+        draw(row, col) {
             this.grid[row][col] = this.currentColorId;
         },
-        floodFill: function (row, col) {
+        floodFill(row, col) {
             let targetColorId = this.grid[row][col];
 
             // keep track of visited and active cells
@@ -103,7 +103,7 @@ export default {
                 }
             }
         },
-        neighbors: function (row, col) {
+        neighbors(row, col) {
             let neighbors = [];
             for (let [newRow, newCol] of [[row, col - 1], [row, col + 1], [row + 1, col], [row - 1, col]]) {
                 if (!(newRow < 0 || newRow >= this.numCells || newCol < 0 || newCol >= this.numCells)) {
@@ -112,19 +112,19 @@ export default {
             }
             return neighbors;
         },
-        handleMouseDown: function (e) {
+        handleMouseDown(e) {
             this.penDown = true;
             this.mouseDown(e.offsetX, e.offsetY);
         },
-        handleMouseUp: function () {
+        handleMouseUp() {
             this.penDown = false;
         },
-        handleMouseMove: function (e) {
+        handleMouseMove(e) {
             if (this.penDown) {
                 this.mouseDown(e.offsetX, e.offsetY);
             }
         },
-        mouseDown: function (x, y) {
+        mouseDown(x, y) {
             let row = Math.floor(y / this.cellSize);
             let col = Math.floor(x / this.cellSize);
             if (this.paintBucketMode && this.penDown) {
@@ -135,7 +135,7 @@ export default {
             }
             this.render();
         },
-        render: function () {
+        render() {
             for (let row = 0; row < this.numCells; row++) {
                 for (let col = 0; col < this.numCells; col++) {
                     let index = this.grid[row][col];
@@ -146,7 +146,7 @@ export default {
                 }
             }
         },
-        downloadImage: function () {
+        downloadImage() {
             let dataURL = this.$refs.canvas.toDataURL('image/png');
             window.open(dataURL);
         }

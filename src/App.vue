@@ -16,7 +16,7 @@ import Toolbar from '@/components/Toolbar';
 
 export default {
     name: 'App',
-    data: function () {
+    data() {
         return {
             cellSize: 32,
             numCells: 8,
@@ -36,26 +36,26 @@ export default {
         Toolbar
     },
     methods: {
-        setCurrentColorId: function (id) {
+        setCurrentColorId(id) {
             this.currentColorId = id;
         },
-        setColor: function (id, color) {
+        setColor(id, color) {
             this.palette[id] = color;
             this.refreshCanvas();
         },
-        setPaintBucketMode: function (paintBucketMode) {
+        setPaintBucketMode(paintBucketMode) {
             this.paintBucketMode = paintBucketMode;
         },
-        setCellSize: function(cellSize) {
+        setCellSize(cellSize) {
             this.cellSize = cellSize;
         },
-        setNumCells: function(numCells) {
+        setNumCells(numCells) {
             this.numCells = numCells;
         },
-        refreshCanvas: function () {
+        refreshCanvas() {
             this.$refs.pixelCanvas.render();
         },
-        resetCanvas: function() {
+        resetCanvas() {
             this.currentColorId = this.$refs.paletteEditor.currentColorId = 0;
             setTimeout(() => {
                 this.$refs.pixelCanvas.resetGrid();

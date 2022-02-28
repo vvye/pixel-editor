@@ -16,7 +16,7 @@
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Toolbar',
-    data: function () {
+    data() {
         return {
             paintBucketMode: false,
             cellSize: 32,
@@ -24,23 +24,23 @@ export default {
         }
     },
     methods: {
-        clearCanvas: function () {
+        clearCanvas() {
             this.$emit('clearCanvasButtonPressed');
         }
     },
     watch: {
         paintBucketMode: {
-            handler: function () {
+            handler() {
                 this.$emit('paintBucketModeChanged', this.paintBucketMode);
             }
         },
         cellSize: {
-            handler: function () {
+            handler() {
                 this.$emit('cellSizeChanged', this.cellSize);
             }
         },
         numCells: {
-            handler: function () {
+            handler() {
                 this.$emit('numCellsChanged', this.numCells);
             }
         }
