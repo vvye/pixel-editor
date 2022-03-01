@@ -59,12 +59,12 @@ export default {
         },
         cellSize: {
             handler() {
-                this.$emit('cellSizeChanged', this.cellSize);
+                this.$emit('cellSizeChanged', parseInt(this.cellSize));
             }
         },
         numCells: {
             handler() {
-                this.$emit('numCellsChanged', this.numCells);
+                this.$emit('numCellsChanged', parseInt(this.numCells));
             }
         },
         showGridLines: {
