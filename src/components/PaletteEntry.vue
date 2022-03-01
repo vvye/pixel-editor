@@ -32,12 +32,13 @@ div {
 div:hover {
     transform: scale(1.075);
     border-radius: 0.125rem;
+    box-shadow: 0 0 0.125rem rgba(0, 0, 0, 0.5);
 }
 
 div.selected {
     transform: scale(1.2);
     border-radius: 0.25rem;
-    box-shadow: 0 0 0.125rem rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
     z-index: 10;
 }
 </style>
