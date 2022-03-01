@@ -44,7 +44,7 @@ export default {
         return {
             paintBucketMode: false,
             cellSize: 32,
-            numCells: 8,
+            numCells: 16,
             showGridLines: false,
             fileFormat: 'default'
         }

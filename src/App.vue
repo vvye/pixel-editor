@@ -28,7 +28,7 @@ export default {
     data() {
         return {
             cellSize: 32,
-            numCells: 8,
+            numCells: 16,
             paintBucketMode: false,
             palette: [
                 [1, 2, 18, 255],
@@ -157,6 +157,11 @@ button:active, button.pressed {
     padding-top: 0.6rem;
     padding-bottom: 0.4rem;
     text-shadow: 0 0.125rem 0.125rem #2b3a44;
+}
+
+label {
+    cursor: pointer;
+    display: inline-flex;
 }
 
 .transparent {
