@@ -5,7 +5,7 @@
                           :color="color" :selected="this.currentColorId === id"
                           @click="selectColor(id)" />
         </div>
-        <label class="button" v-if="this.currentColorId !== 30">
+        <label class="button" :style="{visibility: this.currentColorId === 30 ? 'hidden' : 'visible'}">
             <input type="color" :value="this.selectedColorAsHex" @input="changeSelectedColor"> Edit selected color
         </label>
     </div>
