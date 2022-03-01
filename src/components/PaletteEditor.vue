@@ -1,12 +1,14 @@
 <template>
-    <div class="palette-container">
-        <PaletteEntry v-for="(color, id) in this.palette" :key="id"
-                      :color="color" :selected="this.currentColorId === id"
-                      @click="selectColor(id)" />
+    <div>
+        <div class="palette-container">
+            <PaletteEntry v-for="(color, id) in this.palette" :key="id"
+                          :color="color" :selected="this.currentColorId === id"
+                          @click="selectColor(id)" />
+        </div>
+        <label class="button" v-if="this.currentColorId !== 30">
+            <input type="color" :value="this.selectedColorAsHex" @input="changeSelectedColor"> Edit selected color
+        </label>
     </div>
-    <label class="button" v-if="this.currentColorId !== 30">
-        <input type="color" :value="this.selectedColorAsHex" @input="changeSelectedColor"> Edit selected color
-    </label>
 </template>
 
 <script>
