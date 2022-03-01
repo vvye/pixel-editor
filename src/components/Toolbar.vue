@@ -40,6 +40,7 @@
 export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Toolbar',
+
     data() {
         return {
             paintBucketMode: false,
@@ -49,16 +50,7 @@ export default {
             fileFormat: 'default'
         }
     },
-    methods: {
-        clearCanvasButtonPressed() {
-            this.$emit('clearCanvasButtonPressed');
-        },
-        downloadButtonPressed() {
-            let fileFormat = this.fileFormat;
-            this.fileFormat = 'default';
-            this.$emit('downloadRequested', fileFormat);
-        }
-    },
+
     watch: {
         paintBucketMode: {
             handler() {
@@ -80,11 +72,24 @@ export default {
                 this.$emit('showGridLinesChanged', this.showGridLines);
             }
         }
+    },
+
+    methods: {
+        clearCanvasButtonPressed() {
+            this.$emit('clearCanvasButtonPressed');
+        },
+
+        downloadButtonPressed() {
+            let fileFormat = this.fileFormat;
+            this.fileFormat = 'default';
+            this.$emit('downloadRequested', fileFormat);
+        }
     }
 }
 </script>
 
 <style scoped>
+
 .toolbar-container {
     margin-bottom: 2rem;
 }

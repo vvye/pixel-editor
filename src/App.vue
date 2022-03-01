@@ -25,79 +25,66 @@ import Toolbar from '@/components/Toolbar';
 
 export default {
     name: 'App',
+
+    components: {
+        PixelCanvas,
+        PaletteEditor,
+        Toolbar
+    },
+
     data() {
         return {
             cellSize: 32,
             numCells: 16,
             paintBucketMode: false,
             palette: [
-                [1, 2, 18, 255],
-                [37, 38, 62, 128],
-                [103, 103, 127, 255],
-                [157, 157, 181, 255],
-                [202, 202, 227, 255],
-                [241, 241, 250, 255],
-                [129, 2, 26, 255],
-                [194, 11, 27, 255],
-                [242, 49, 36, 255],
-                [255, 110, 90, 255],
-                [249, 163, 148, 255],
-                [248, 215, 210, 255],
-                [112, 47, 37, 255],
-                [177, 103, 49, 255],
-                [232, 149, 49, 255],
-                [249, 195, 46, 255],
-                [246, 222, 93, 255],
-                [249, 235, 161, 255],
-                [5, 84, 65, 255],
-                [32, 143, 59, 255],
-                [58, 190, 50, 255],
-                [107, 209, 80, 255],
-                [153, 227, 108, 255],
-                [218, 234, 160, 255],
-                [19, 58, 127, 255],
-                [43, 114, 177, 255],
-                [53, 155, 209, 255],
-                [72, 190, 233, 255],
-                [123, 203, 231, 255],
-                [181, 222, 235, 255],
+                [1, 2, 18, 255], [37, 38, 62, 128], [103, 103, 127, 255], [157, 157, 181, 255], [202, 202, 227, 255],
+                [241, 241, 250, 255], [129, 2, 26, 255], [194, 11, 27, 255], [242, 49, 36, 255], [255, 110, 90, 255],
+                [249, 163, 148, 255], [248, 215, 210, 255], [112, 47, 37, 255], [177, 103, 49, 255], [232, 149, 49, 255],
+                [249, 195, 46, 255], [246, 222, 93, 255], [249, 235, 161, 255], [5, 84, 65, 255], [32, 143, 59, 255],
+                [58, 190, 50, 255], [107, 209, 80, 255], [153, 227, 108, 255], [218, 234, 160, 255], [19, 58, 127, 255],
+                [43, 114, 177, 255], [53, 155, 209, 255], [72, 190, 233, 255], [123, 203, 231, 255], [181, 222, 235, 255],
                 [0, 0, 0, 0]
             ],
             currentColorId: 0,
             showGridLines: false,
         }
     },
-    components: {
-        PixelCanvas,
-        PaletteEditor,
-        Toolbar
-    },
+
     methods: {
         setCurrentColorId(id) {
             this.currentColorId = id;
         },
+
         setColor(id, color) {
             this.palette[id] = color;
             this.refreshCanvas();
         },
+
         setPaintBucketMode(paintBucketMode) {
             this.paintBucketMode = paintBucketMode;
         },
+
         setCellSize(cellSize) {
             this.cellSize = cellSize;
         },
+
         setNumCells(numCells) {
             this.numCells = numCells;
         },
+
         refreshCanvas() {
             this.$refs.pixelCanvas.render();
         },
+
         setShowGridLines(showGridLines) {
             this.showGridLines = showGridLines;
         },
+
         downloadCanvasImage(fileFormat) {
             this.$refs.pixelCanvas.downloadImage(fileFormat);
         },
+
         resetCanvas() {
             this.$refs.pixelCanvas.resetGrid();
             this.refreshCanvas();
@@ -144,7 +131,7 @@ button, .button, select {
 }
 
 select {
-    appearance:none;
+    appearance: none;
 }
 
 button:hover, .button:hover, select:hover {

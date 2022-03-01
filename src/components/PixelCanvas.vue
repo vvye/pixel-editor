@@ -6,6 +6,7 @@
 <script>
 export default {
     name: 'PixelCanvas',
+
     props: {
         cellSize: Number,
         numCells: Number,
@@ -14,6 +15,7 @@ export default {
         paintBucketMode: Boolean,
         showGridLines: Boolean
     },
+
     data() {
         return {
             ctx: null,
@@ -23,6 +25,7 @@ export default {
             prevMousePosition: null
         }
     },
+
     watch: {
         cellSize: {
             handler() {
@@ -42,6 +45,7 @@ export default {
             }
         }
     },
+
     mounted() {
         let canvas = this.$refs.canvas;
         this.ctx = canvas.getContext('2d');
@@ -49,6 +53,7 @@ export default {
         this.showDefaultImage();
         this.render();
     },
+
     methods: {
         resetGrid() {
             for (let row = 0; row < this.numCells; row++) {
@@ -58,6 +63,7 @@ export default {
                 }
             }
         },
+
         updateCanvasSize() {
             let canvas = this.$refs.canvas;
             canvas.width = canvas.height = this.cellSize * this.numCells;
@@ -72,9 +78,11 @@ export default {
                 }
             }
         },
+
         draw(row, col) {
             this.grid[row][col] = this.currentColorId;
         },
+
         floodFill(row, col) {
             let targetColorId = this.grid[row][col];
 
@@ -118,6 +126,7 @@ export default {
                 }
             }
         },
+
         neighbors(row, col) {
             let neighbors = [];
             for (let [newRow, newCol] of [[row, col - 1], [row, col + 1], [row + 1, col], [row - 1, col]]) {
@@ -127,14 +136,17 @@ export default {
             }
             return neighbors;
         },
+
         handleMouseDown(e) {
             this.penDown = true;
             this.mouseDown(e.offsetX, e.offsetY);
         },
+
         handleMouseUp() {
             this.penDown = false;
             this.prevMousePosition = null;
         },
+
         handleMouseMove(e) {
             if (!this.penDown) {
                 return;
@@ -156,6 +168,7 @@ export default {
             this.prevMousePosition = [currX, currY];
             this.render();
         },
+
         mouseDown(x, y, render = true) {
             let row = Math.floor(y / this.cellSize);
             let col = Math.floor(x / this.cellSize);
@@ -172,6 +185,7 @@ export default {
                 this.render();
             }
         },
+
         render() {
             this.ctx.clearRect(0, 0, this.numCells * this.cellSize, this.numCells * this.cellSize);
             for (let row = 0; row < this.numCells; row++) {
@@ -197,6 +211,7 @@ export default {
                 }
             }
         },
+
         showDefaultImage() {
             this.grid = [
                 [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24],
@@ -217,6 +232,7 @@ export default {
                 [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24],
             ];
         },
+
         downloadImage(format) {
             let dataURL = this.$refs.canvas.toDataURL('image/' + format);
             let a = document.createElement('a');
@@ -229,9 +245,11 @@ export default {
 </script>
 
 <style scoped>
+
 canvas {
     border: 1rem solid #2b3a44;
     border-radius: 0.25rem;
     box-shadow: 0 0.25rem 0 #0e151a;
 }
+
 </style>

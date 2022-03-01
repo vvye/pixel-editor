@@ -16,28 +16,34 @@ import PaletteEntry from '@/components/PaletteEntry';
 
 export default {
     name: 'PaletteEditor',
+
     components: {
         PaletteEntry
     },
+
+    props: {
+        palette: Array
+    },
+
     data() {
         return {
             currentColorId: 0
         }
     },
-    props: {
-        palette: Array
-    },
+
     computed: {
         selectedColorAsHex() {
             let color = this.palette[this.currentColorId].slice(0, 3);
             return '#' + color.map(n => n.toString(16).padStart(2, '0')).join('');
         }
     },
+
     methods: {
         selectColor(id) {
             this.currentColorId = id;
             this.$emit('currentColorIdChanged', id);
         },
+
         changeSelectedColor(e) {
             let newColorHex = e.target.value;
             let r = parseInt(newColorHex.substring(1, 3), 16);
@@ -51,6 +57,7 @@ export default {
 </script>
 
 <style scoped>
+
 .palette-container {
     margin-top: 3rem;
     display: flex;
