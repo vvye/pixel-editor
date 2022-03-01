@@ -9,6 +9,7 @@
                      @download-requested="downloadCanvasImage"></Toolbar>
             <PaletteEditor ref="paletteEditor" :palette="palette" :current-color-id="currentColorId"
                            @current-color-id-changed="setCurrentColorId" @color-changed="setColor" />
+            <AppInfo />
         </div>
         <div class="canvas-container">
             <PixelCanvas ref="pixelCanvas" :cell-size="cellSize" :num-cells="numCells" :palette="palette"
@@ -22,6 +23,7 @@
 import PixelCanvas from '@/components/PixelCanvas.vue'
 import PaletteEditor from '@/components/PaletteEditor'
 import Toolbar from '@/components/Toolbar';
+import AppInfo from '@/components/AppInfo';
 
 export default {
     name: 'App',
@@ -29,7 +31,8 @@ export default {
     components: {
         PixelCanvas,
         PaletteEditor,
-        Toolbar
+        Toolbar,
+        AppInfo
     },
 
     data() {
