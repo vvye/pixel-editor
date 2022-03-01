@@ -197,9 +197,12 @@ export default {
                 }
             }
         },
-        downloadImage() {
-            let dataURL = this.$refs.canvas.toDataURL('image/png');
-            window.open(dataURL);
+        downloadImage(format) {
+            let dataURL = this.$refs.canvas.toDataURL('image/' + format);
+            let a = document.createElement('a');
+            a.href = dataURL;
+            a.download = 'pixel-creation.' + format;
+            a.click();
         }
     }
 }

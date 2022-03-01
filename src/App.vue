@@ -6,7 +6,7 @@
             <Toolbar @paint-bucket-mode-changed="setPaintBucketMode" @clear-canvas-button-pressed="resetCanvas"
                      @cell-size-changed="setCellSize" @num-cells-changed="setNumCells"
                      @show-grid-lines-changed="setShowGridLines"
-                     @download-button-pressed="downloadCanvasImage"></Toolbar>
+                     @download-requested="downloadCanvasImage"></Toolbar>
             <PaletteEditor ref="paletteEditor" :palette="palette" :current-color-id="currentColorId"
                            @current-color-id-changed="setCurrentColorId" @color-changed="setColor" />
         </div>
@@ -95,8 +95,8 @@ export default {
         setShowGridLines(showGridLines) {
             this.showGridLines = showGridLines;
         },
-        downloadCanvasImage() {
-            this.$refs.pixelCanvas.downloadImage();
+        downloadCanvasImage(fileFormat) {
+            this.$refs.pixelCanvas.downloadImage(fileFormat);
         },
         resetCanvas() {
             this.$refs.pixelCanvas.resetGrid();
@@ -126,7 +126,7 @@ body {
     text-shadow: 0 0.125rem 0 #0e151a;
 }
 
-body, button {
+body, button, .button, select, option {
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 1.2rem;
 }
@@ -141,6 +141,10 @@ button, .button, select {
     border-radius: 0.25rem;
     color: #c9ccce;
     transition: all 0.05s ease;
+}
+
+select {
+    appearance:none;
 }
 
 button:hover, .button:hover, select:hover {
@@ -164,7 +168,7 @@ button:active, button.pressed {
 <style scoped>
 .container {
     display: grid;
-    grid-template-columns: 32rem auto;
+    grid-template-columns: 34rem auto;
     gap: 2rem;
 }
 
