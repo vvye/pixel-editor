@@ -1,4 +1,6 @@
 # pixel-editor
+An application
+
 [https://misc.eric-kaiser.net/pixel-editor](https://misc.eric-kaiser.net/pixel-editor)
 
 ## Project setup
