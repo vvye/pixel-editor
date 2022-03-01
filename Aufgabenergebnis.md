@@ -37,7 +37,8 @@ auch eine Vue-Anbindung gibt.)
 
 ## Installation / Ausführen des Projektes
 
-Die App ist zur schnellen Ansicht auf [misc.eric-kaiser.net/pixel-editor](misc.eric-kaiser.net/pixel-editor) gehostet.
+Die App ist zur schnellen Ansicht auf [misc.eric-kaiser.net/pixel-editor](https://misc.eric-kaiser.net/pixel-editor)
+gehostet.
 
 Um das Projekt lokal auszuführen, vorgehen wie in README.md beschrieben:
 
